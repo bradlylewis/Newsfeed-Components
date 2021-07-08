@@ -93,16 +93,16 @@ const data = [
   Step 1: Write a component called 'articleMaker' to create an article.
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
-*/
-  // <div class="article">
-  //   <h2>{title of the article}</h2>
-  //   <p class="date">{date of the article}</p>
 
-  //   {three separate paragraph elements}
+  <div class="article">
+    <h2>{title of the article}</h2>
+    <p class="date">{date of the article}</p>
 
-  //   <span class="expandButton">+</span>
-  // </div>
-/*
+    {three separate paragraph elements}
+
+    <span class="expandButton">+</span>
+  </div>
+
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
 
@@ -126,14 +126,36 @@ const articleMaker = (data) => {
   const p3 = document.createElement('p');
   const span = document.createElement('span');
 
+  // building the structure
+  article.appendChild(title);
+  article.appendChild(date);
+  article.appendChild(p1);
+  article.appendChild(p2);
+  article.appendChild(p3);
+  article.appendChild(span);
+
+  // adding classes
+  article.classList.add('article');
+  date.classList.add('date');
+  span.classList.add('expandButton');
+
+  // add content
+  title.textContent = data.title
+  date.textContent = data.date
+  p1.textContent = data.firstParagraph
+  p2.textContent = data.secondParagraph
+  p3.textContent = data.thirdParagraph
+  span.textContent = "+"
+
+  // adding listener to span
+  span.addEventListener('click', event => {
+    article.classList.toggle('article-open');
+  })
+
+  return article;
 }
 
-
-  // <div class="article">
-  //   <h2>{title of the article}</h2>
-  //   <p class="date">{date of the article}</p>
-
-  //   {three separate paragraph elements}
-
-  //   <span class="expandButton">+</span>
-  // </div>
+const articles = document.querySelector('.articles');
+data.forEach(element => {
+  articles.appendChild(articleMaker(element));
+});
